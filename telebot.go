@@ -66,6 +66,8 @@ const (
 	OnGame                 = "\agame"
 	OnPoll                 = "\apoll"
 	OnPollAnswer           = "\apoll_answer"
+	OnMessageReaction      = "\amessage_reaction"
+	OnMessageReactionCount = "\amessage_reaction_count"
 	OnPinned               = "\apinned"
 	OnChannelPost          = "\achannel_post"
 	OnEditedChannelPost    = "\aedited_channel_post"

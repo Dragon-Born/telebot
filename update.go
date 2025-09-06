@@ -299,6 +299,15 @@ func (b *Bot) ProcessContext(c Context) {
 		return
 	}
 
+	if u.MessageReactionCount != nil {
+		b.handle(OnMessageReactionCount, c)
+		return
+	}
+	if u.MessageReaction != nil {
+		b.handle(OnMessageReaction, c)
+		return
+	}
+
 	if u.ShippingQuery != nil {
 		b.handle(OnShipping, c)
 		return

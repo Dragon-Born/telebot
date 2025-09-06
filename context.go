@@ -55,6 +55,12 @@ type Context interface {
 	// PollAnswer returns stored poll answer if such presented.
 	PollAnswer() *PollAnswer
 
+	// MessageReaction returns stored message reaction if such presented.
+	MessageReaction() *MessageReaction
+
+	// MessageReactionCount returns stored message reaction count if such presented.
+	MessageReactionCount() *MessageReactionCount
+
 	// ChatMember returns chat member changes.
 	ChatMember() *ChatMemberUpdate
 
@@ -272,6 +278,14 @@ func (c *nativeContext) PollAnswer() *PollAnswer {
 	return c.u.PollAnswer
 }
 
+func (c *nativeContext) MessageReaction() *MessageReaction {
+	return c.u.MessageReaction
+}
+
+func (c *nativeContext) MessageReactionCount() *MessageReactionCount {
+	return c.u.MessageReactionCount
+}
+
 func (c *nativeContext) Migration() (int64, int64) {
 	m := c.u.Message
 	if m == nil {
@@ -306,6 +320,10 @@ func (c *nativeContext) BoostRemoved() *BoostRemoved {
 
 func (c *nativeContext) Sender() *User {
 	switch {
+	case c.u.MessageReaction != nil:
+		if c.u.MessageReaction.User != nil {
+			return c.u.MessageReaction.User
+		}
 	case c.u.Callback != nil:
 		return c.u.Callback.Sender
 	case c.Message() != nil:
@@ -340,6 +358,10 @@ func (c *nativeContext) Sender() *User {
 
 func (c *nativeContext) Chat() *Chat {
 	switch {
+	case c.u.MessageReaction != nil:
+		return c.u.MessageReaction.Chat
+	case c.u.MessageReactionCount != nil:
+		return c.u.MessageReactionCount.Chat
 	case c.Message() != nil:
 		return c.Message().Chat
 	case c.u.MyChatMember != nil:
