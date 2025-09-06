@@ -49,6 +49,14 @@ func Placeholder(text string) *SendOptions {
 	}
 }
 
+// EffectID is used to set a message effect identifier as a send option.
+// It enables calls like: b.Send(recipient, "text", tele.EffectID("str_id")).
+func EffectID(id string) *SendOptions {
+	return &SendOptions{
+		EffectID: id,
+	}
+}
+
 // SendOptions has most complete control over in what way the message
 // must be sent, providing an API-complete set of custom properties
 // and options.
